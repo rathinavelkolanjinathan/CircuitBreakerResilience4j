@@ -1,25 +1,23 @@
-package com.javatechie.os;
+package com.circuitbreaker.api.controller;
 
-import com.javatechie.os.entity.Order;
-import com.javatechie.os.repository.OrderRepository;
+import com.circuitbreaker.api.entity.Order;
+import com.circuitbreaker.api.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/orders")
-public class CatalogServiceApplication {
-
+public class CatalogServiceController {
     @Autowired
     private OrderRepository orderRepository;
-
     @PostConstruct
     public void initOrdersTable() {
         orderRepository.saveAll(Stream.of(
@@ -33,18 +31,13 @@ public class CatalogServiceApplication {
                 collect(Collectors.toList()));
     }
 
-	@GetMapping
-	public List<Order> getOrders(){
-		return orderRepository.findAll();
-	}
-	@GetMapping("/{category}")
-	public List<Order> getOrdersByCategory(@PathVariable String category){
-		return orderRepository.findByCategory(category);
-	}
-
-    public static void main(String[] args) {
-
-        SpringApplication.run(CatalogServiceApplication.class, args);
+    @GetMapping
+    public List<Order> getOrders(){
+        return orderRepository.findAll();
+    }
+    @GetMapping("/{category}")
+    public List<Order> getOrdersByCategory(@PathVariable String category){
+        return orderRepository.findByCategory(category);
     }
 
 }

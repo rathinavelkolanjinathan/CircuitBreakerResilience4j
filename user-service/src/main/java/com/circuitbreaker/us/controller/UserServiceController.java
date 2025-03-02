@@ -1,12 +1,8 @@
-package com.javatechie.us;
+package com.circuitbreaker.us.controller;
 
-import com.javatechie.us.dto.OrderDTO;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import com.circuitbreaker.us.dto.OrderDTO;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +17,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SpringBootApplication
 @RestController
 @RequestMapping("/user-service")
-public class UserServiceApplication {
-
+public class UserServiceController {
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
     @Autowired
     @Lazy
     private RestTemplate restTemplate;
@@ -38,7 +36,7 @@ public class UserServiceApplication {
 
 
     @GetMapping("/displayOrders")
-  // @CircuitBreaker(name =USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
+    // @CircuitBreaker(name =USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
     @Retry(name = USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
     public List<OrderDTO> displayOrders(@RequestParam("category") String category) {
         String url = category == null ? BASEURL : BASEURL + "/" + category;
@@ -58,13 +56,4 @@ public class UserServiceApplication {
         ).collect(Collectors.toList());
     }
 
-
-    public static void main(String[] args) {
-        SpringApplication.run(UserServiceApplication.class, args);
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 }

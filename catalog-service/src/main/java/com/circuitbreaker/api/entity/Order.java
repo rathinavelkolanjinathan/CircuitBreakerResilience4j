@@ -1,4 +1,4 @@
-package com.javatechie.os.entity;
+package com.circuitbreaker.api.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.javatechie.us.dto;
+package com.circuitbreaker.us.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

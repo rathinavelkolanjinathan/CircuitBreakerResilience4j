@@ -1,6 +1,6 @@
-package com.javatechie.os.repository;
+package com.circuitbreaker.api.repository;
 
-import com.javatechie.os.entity.Order;
+import com.circuitbreaker.api.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
