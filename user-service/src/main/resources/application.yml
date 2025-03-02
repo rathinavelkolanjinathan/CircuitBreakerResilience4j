@@ -26,11 +26,7 @@ resilience4j:
         slidingWindowType: COUNT_BASED
 
 
-  retry:
-    instances:
-      userService:
-        maxRetryAttempts: 3
-        waitDuration: 10s
+
 
 
 

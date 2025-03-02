@@ -1,6 +1,7 @@
 package com.circuitbreaker.us.controller;
 
 import com.circuitbreaker.us.dto.OrderDTO;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +37,8 @@ public class UserServiceController {
 
 
     @GetMapping("/displayOrders")
-    // @CircuitBreaker(name =USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
-    @Retry(name = USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
+     @CircuitBreaker(name =USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
+    //@Retry(name = USER_SERVICE,fallbackMethod = "getAllAvailableProducts")
     public List<OrderDTO> displayOrders(@RequestParam("category") String category) {
         String url = category == null ? BASEURL : BASEURL + "/" + category;
         System.out.println("retry method called "+attempt++ +" times "+" at "+new Date());
